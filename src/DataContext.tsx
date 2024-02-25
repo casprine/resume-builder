@@ -76,7 +76,7 @@ const ResumeBuilderContext = createContext<ResumeBuilderContextProps>({
   selectBlockCopy: () => {},
 });
 
-export const ResumeBuilderProvider: FC = ({ children }) => {
+export const ResumeBuilderProvider: FC = ({ children }: { children: React.ReactNode }) => {
   const [blocks, setBlocks] = useState<Block[] | []>([headerBlockSample, workExperience]);
 
   const [selectedBlock, setSelectBlock] = useState<Block | null>(null);

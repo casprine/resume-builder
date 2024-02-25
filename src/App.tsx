@@ -1,32 +1,48 @@
-// import { useState } from 'react';
-// import reactLogo from './assets/react.svg';
-// import viteLogo from '/vite.svg';
+import { useState } from 'react';
+import reactLogo from './assets/react.svg';
+import viteLogo from '/vite.svg';
 import './App.css';
 import './index.scss';
+import { format } from 'date-fns';
+import { ResumeBuilderProvider, useResumeBuilder } from './DataContext';
 
-function App() {
-  // const [count, setCount] = useState(0);
-
-  return (
-    <>
-      {/* <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>count is {count}</button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">Click on the Vite and React logos to learn more</p> */}
-    </>
-  );
+function getValueFromBlock(block, name) {
+  return block?.content[name]?.formValue || '';
 }
 
-export default App;
+function formatDate(dateString: string) {
+  return format(new Date(dateString), 'LLL y');
+}
+
+const generateBlankExperience = () => {
+  return {
+    id: `work-${String(new Date().getTime() / 1000)}`,
+    type: 'work-experience',
+    content: {
+      companyName: '',
+      roles: [
+        {
+          title: '',
+          startDate: '',
+          endDate: '',
+        },
+      ],
+
+      highlights: [''],
+    },
+  };
+};
+
+const Resume = () => {
+  return <div className="resume"></div>;
+};
+
+const AppContainer = () => {
+  return (
+    <ResumeBuilderProvider>
+      <Resume />
+    </ResumeBuilderProvider>
+  );
+};
+
+export default AppContainer;
