@@ -1,0 +1,15 @@
+{
+  "name": "keel",
+  "dependencies": {
+    "@teamkeel/functions-runtime": "^0.380.3",
+    "@teamkeel/testing-runtime": "^0.380.3",
+    "kysely": "^0.23.5",
+    "node-fetch": "^3.3.2"
+  },
+  "devDependencies": {
+    "@types/node": "^18.11.18",
+    "tsx": "^3.12.6",
+    "typescript": "^5.3.3",
+    "vitest": "^0.34.6"
+  }
+}

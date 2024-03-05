@@ -1,7 +1,9 @@
+// Visit https://docs.keel.so/ for documentation on how to get started
 model ExperienceHighlight {
     fields {
         index ID
         highlight Text
+        experience Experience
     }
 }
 
