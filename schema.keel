@@ -1,0 +1,23 @@
+model ExperienceHighlight {
+    fields {
+        index ID
+        highlight Text
+        experience Experience
+    }
+}
+
+model Experience {
+    fields {
+        companyName Text @unique
+        jobTitle Text
+        startDate Timestamp
+        endDate Timestamp?
+        highlights ExperienceHighlight[]
+    }
+}
+
+model Experiences {
+    fields {
+        experience Experience[]
+    }
+}
