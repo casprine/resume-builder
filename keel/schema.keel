@@ -15,4 +15,8 @@ model Experience {
         endDate Timestamp?
         highlights ExperienceHighlight[]
     }
+
+    actions {
+        list getExperiences()
+    }
 }
