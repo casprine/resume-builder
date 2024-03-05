@@ -2,7 +2,6 @@ model ExperienceHighlight {
     fields {
         index ID
         highlight Text
-        experience Experience
     }
 }
 
@@ -13,11 +12,5 @@ model Experience {
         startDate Timestamp
         endDate Timestamp?
         highlights ExperienceHighlight[]
-    }
-}
-
-model Experiences {
-    fields {
-        experience Experience[]
     }
 }
