@@ -32,23 +32,21 @@ const workExperience: Record<string, ExperienceBlockType> = {
 
 type ExperienceBlock = Record<string, ExperienceBlockType>;
 
-type ResumeBuilderContextProps = {
+type StoreContextProps = {
   experienceBlocks: ExperienceBlockType[];
   selectedExperienceBlock?: ExperienceBlockType | null;
   selectExperienceBlock: (blockId: string) => void;
   updateExperienceBlock: (block: ExperienceBlockType) => void;
 };
 
-const ResumeBuilderContext = createContext<ResumeBuilderContextProps>({
-  blocks: [],
-  selectBlock: () => {},
-  removeSelectedBlock: () => {},
-  editHeaderField: () => {},
-  updateWorkBlock: () => {},
-  selectBlockCopy: () => {},
+const StoreContext = createContext<StoreContextProps>({
+  experienceBlocks: [],
+  selectedExperienceBlock: null,
+  selectExperienceBlock: () => {},
+  updateExperienceBlock: () => {},
 });
 
-export const ResumeBuilderProvider = ({ children }: { children: React.ReactNode }) => {
+export const StoreProvider = ({ children }: { children: React.ReactNode }) => {
   const [experienceBlocks, setExperienceBlock] = useState<ExperienceBlock>(workExperience);
   const [selectedExperienceBlock, setSelectedExperienceBlock] = useState<ExperienceBlockType | null>(null);
 
@@ -81,10 +79,10 @@ export const ResumeBuilderProvider = ({ children }: { children: React.ReactNode 
     };
   }, [experienceBlocks, updateExperienceBlock, selectExperienceBlock, selectedExperienceBlock]);
 
-  return <ResumeBuilderContext.Provider value={values}>{children}</ResumeBuilderContext.Provider>;
+  return <StoreContext.Provider value={values}>{children}</StoreContext.Provider>;
 };
 
 // eslint-disable-next-line react-refresh/only-export-components
-export const useResumeBuilder = () => {
-  return useContext(ResumeBuilderContext);
+export const useStore = () => {
+  return useContext(StoreContext);
 };

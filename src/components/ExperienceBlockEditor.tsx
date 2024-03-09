@@ -1,82 +1,38 @@
-import { FC } from 'react';
-// import { Dialog } from '@headlessui/react';
-// import { sand } from '@radix-ui/colors';
-import styled from 'styled-components';
+import { Drawer } from 'vaul';
 
-import { HeaderBlockEditor } from './builder-forms/HeaderBlockEditor';
-import { WorkExperienceEditor } from './builder-forms/WorkExperienceEditor';
-
-import { BLOCK_TYPE, useResumeBuilder } from 'store/ResumeBuilderContext';
-
-const editors: Record<BLOCK_TYPE, React.FC> = {
-  header: HeaderBlockEditor,
-  'work-experience': WorkExperienceEditor,
-};
-
-interface BlockEditorDialogProps {
-  show: boolean;
-  closeModal: () => {};
-}
-
-export const BlockEditorDialog: FC<BlockEditorDialogProps> = ({ show, closeModal = () => {} }) => {
-  const { selectedBlock } = useResumeBuilder();
-
+export const ExperienceBlockEditor = () => {
   return (
-    <BlockEditorDialogContainer>
-      <Dialog onClose={closeModal} open={show}>
-        <div
-          style={{
-            position: 'fixed',
-            top: '0',
-            right: '0',
-            bottom: '0',
-            left: '0',
-            backgroundColor: 'rgba( #bfc2ca, 0.01)',
-            backdropFilter: 'blur(0.5px)',
-          }}
-        />
-        <div
-          style={{
-            overflowY: 'auto',
-            position: 'fixed',
-            top: '0',
-            right: '0',
-            bottom: '0',
-            left: '0',
-          }}
-        >
-          <div
-            style={{
-              display: 'flex',
-              padding: '1rem',
-              textAlign: 'center',
-              justifyContent: 'center',
-              alignItems: 'center',
-              minHeight: '100%',
-            }}
-          >
-            <Dialog.Panel
-              style={{
-                overflow: 'hidden',
-                padding: '1.5rem',
-                backgroundColor: '#ffffff',
-                transitionProperty: 'all',
-                textAlign: 'left',
-                verticalAlign: 'middle',
-                width: '100%',
-                maxWidth: selectedBlock?.type === 'header' ? '28rem' : '40rem',
-                border: `1px solid ${sand.sand5}`,
-                borderRadius: '1rem',
-                filter: ' drop-shadow(0 4px 3px rgb(0 0 0 / 0.07)) drop-shadow(0 2px 2px rgb(0 0 0 / 0.06))',
-              }}
-            >
-              {editors?.[selectedBlock?.type as BLOCK_TYPE]}
-            </Dialog.Panel>
+    <Drawer.Root shouldScaleBackground direction="right">
+      <Drawer.Trigger asChild>
+        <button>Open Drawer</button>
+      </Drawer.Trigger>
+      <Drawer.Portal>
+        <Drawer.Overlay className="fixed inset-0 bg-black/40" />
+        <Drawer.Content className="bg-white flex flex-col rounded-t-[10px] h-full w-[400px] mt-24 fixed bottom-0 right-0">
+          <div className="p-4 bg-white flex-1 h-full">
+            <div className="max-w-md mx-auto">
+              <p className="text-zinc-600 mb-8">
+                It uses{' '}
+                <a
+                  href="https://www.radix-ui.com/docs/primitives/components/dialog"
+                  className="underline"
+                  target="_blank"
+                >
+                  Radix&rsquo;s Dialog primitive
+                </a>{' '}
+                under the hood and is inspired by{' '}
+                <a
+                  href="https://twitter.com/devongovett/status/1674470185783402496"
+                  className="underline"
+                  target="_blank"
+                >
+                  this tweet.
+                </a>
+              </p>
+            </div>
           </div>
-        </div>
-      </Dialog>
-    </BlockEditorDialogContainer>
+        </Drawer.Content>
+      </Drawer.Portal>
+    </Drawer.Root>
   );
 };
-
-const BlockEditorDialogContainer = styled.div``;

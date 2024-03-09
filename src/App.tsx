@@ -1,23 +1,28 @@
 import './index.scss';
-import { ResumeBuilderProvider, useResumeBuilder } from './store';
+import { StoreProvider, useStore } from './store';
 import { ExperienceBlock } from './components/ExperienceBlock';
+import { ExperienceBlockEditor } from './components/ExperienceBlockEditor';
 
 const Resume = () => {
-  const { experienceBlocks } = useResumeBuilder();
+  const { experienceBlocks } = useStore();
+
   return (
-    <div className="resume">
-      {experienceBlocks.map((experience) => {
-        return <ExperienceBlock experience={experience} key={experience.id} />;
-      })}
-    </div>
+    <>
+      <div className="resume">
+        <ExperienceBlockEditor />
+        {/* {experienceBlocks.map((experience) => {
+          return <ExperienceBlock experience={experience} key={experience.id} />;
+        })} */}
+      </div>
+    </>
   );
 };
 
 const AppContainer = () => {
   return (
-    <ResumeBuilderProvider>
+    <StoreProvider>
       <Resume />
-    </ResumeBuilderProvider>
+    </StoreProvider>
   );
 };
 

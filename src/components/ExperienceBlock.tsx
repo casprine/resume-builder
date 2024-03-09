@@ -1,4 +1,5 @@
 import { format } from 'date-fns';
+import { useStore } from '../store';
 
 interface Highlight {
   index: string | number;
@@ -16,8 +17,9 @@ export interface ExperienceBlockType {
 }
 
 export const ExperienceBlock = ({ experience }: { experience: ExperienceBlockType }) => {
+  const { selectExperienceBlock } = useStore();
   return (
-    <section className="experience-block">
+    <section className="experience-block" onClick={() => selectExperienceBlock(experience.id)}>
       <div className="experience-header">
         <div className="left">
           <h2>{experience.companyName}</h2>
