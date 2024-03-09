@@ -1,4 +1,5 @@
 import { createContext, FC, useState, useContext, useMemo, useCallback } from 'react';
+import { ExperienceBlockType } from './components/ExperienceBlock';
 
 export type BLOCK_TYPE = 'header' | 'work-experience';
 
@@ -8,27 +9,38 @@ type Block = {
   content: any; // define later
 };
 
-const workExperience: Block = {
+const workExperience: ExperienceBlockType = {
   id: `work-${String(new Date().getTime() / 1000)}`,
-  type: 'work-experience',
-  content: {
-    companyName: 'ChipperCash',
-    roles: [
-      {
-        title: 'Design lead',
-        startDate: '2018-11-01',
-        endDate: '2020-01-01',
-      },
-    ],
+  companyName: 'ChipperCash',
+  jobTitle: 'Software Engineer',
+  startDate: '2018-11-01',
+  location: 'Delaware, US',
 
-    highlights: [
-      'Design system owner responsible for defining and maintaining design standards.',
-      `Led team of 13 designers, researchers, and content designers, to ensure craft, consistency, and solid
-       user experiences across Mobile and Web. Created roadmaps, processes, and structure for the Design team.`,
-      `Lead on the brand update project,working on market research, coordinating brand strategy, and
-                  executing on design solutions to refresh and elevate brand identity.`,
-    ],
-  },
+  // content: {
+  //   roles: [
+  //     {
+  //       title: 'Design lead',
+  //       ,
+  //       endDate: '2020-01-01',
+  //     },
+  //   ],
+
+  highlights: [
+    {
+      index: 1,
+      highlight: 'Design system owner responsible for defining and maintaining design standards.',
+    },
+    {
+      index: 2,
+      highlight:
+        'Led team of 13 designers, researchers, and content designers, to ensure craft, consistency, and solid user experiences across Mobile and Web. Created roadmaps, processes, and structure for the Design team.',
+    },
+    {
+      index: 3,
+      highlight: `Lead on the brand update project,working on market research, coordinating brand strategy, and
+      executing on design solutions to refresh and elevate brand identity.`,
+    },
+  ],
 };
 
 const headerBlockSample: Block = {
@@ -76,8 +88,8 @@ const ResumeBuilderContext = createContext<ResumeBuilderContextProps>({
   selectBlockCopy: () => {},
 });
 
-export const ResumeBuilderProvider: FC = ({ children }: { children: React.ReactNode }) => {
-  const [blocks, setBlocks] = useState<Block[] | []>([headerBlockSample, workExperience]);
+export const ResumeBuilderProvider = ({ children }: { children: React.ReactNode }) => {
+  const [blocks, setBlocks] = useState<Block[] | []>([workExperience]);
 
   const [selectedBlock, setSelectBlock] = useState<Block | null>(null);
 
