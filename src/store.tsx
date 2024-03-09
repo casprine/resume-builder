@@ -33,14 +33,10 @@ const workExperience: Record<string, ExperienceBlockType> = {
 type ExperienceBlock = Record<string, ExperienceBlockType>;
 
 type ResumeBuilderContextProps = {
-  // blocks: Block[];
-  // headerBlock?: Block;
-  // selectedBlock?: Block | null;
-  // selectBlock: (blockId: string) => void;
-  // removeSelectedBlock: () => void;
-  // editHeaderField: (headerBlock: any) => void;
-  // updateWorkBlock: (block: any) => void;
-  // selectBlockCopy: (block: Block) => void;
+  experienceBlocks: ExperienceBlockType[];
+  selectedExperienceBlock?: ExperienceBlockType | null;
+  selectExperienceBlock: (blockId: string) => void;
+  updateExperienceBlock: (block: ExperienceBlockType) => void;
 };
 
 const ResumeBuilderContext = createContext<ResumeBuilderContextProps>({
