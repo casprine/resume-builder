@@ -3,11 +3,10 @@ import { ResumeBuilderProvider, useResumeBuilder } from './store';
 import { ExperienceBlock } from './components/ExperienceBlock';
 
 const Resume = () => {
-  const { blocks } = useResumeBuilder();
-
+  const { experienceBlocks } = useResumeBuilder();
   return (
     <div className="resume">
-      {blocks.map((experience) => {
+      {experienceBlocks.map((experience) => {
         return <ExperienceBlock experience={experience} key={experience.id} />;
       })}
     </div>

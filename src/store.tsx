@@ -1,82 +1,46 @@
-import { createContext, FC, useState, useContext, useMemo, useCallback } from 'react';
+import { createContext, useState, useContext, useMemo, useCallback } from 'react';
 import { ExperienceBlockType } from './components/ExperienceBlock';
 
 export type BLOCK_TYPE = 'header' | 'work-experience';
 
-type Block = {
-  id: string;
-  type: BLOCK_TYPE;
-  content: any; // define later
-};
+const workExperience: Record<string, ExperienceBlockType> = {
+  [`work-${String(new Date().getTime() / 1000)}`]: {
+    id: `work-${String(new Date().getTime() / 1000)}`,
+    companyName: 'ChipperCash',
+    jobTitle: 'Software Engineer',
+    startDate: '2018-11-01',
+    location: 'Delaware, US',
 
-const workExperience: ExperienceBlockType = {
-  id: `work-${String(new Date().getTime() / 1000)}`,
-  companyName: 'ChipperCash',
-  jobTitle: 'Software Engineer',
-  startDate: '2018-11-01',
-  location: 'Delaware, US',
-
-  // content: {
-  //   roles: [
-  //     {
-  //       title: 'Design lead',
-  //       ,
-  //       endDate: '2020-01-01',
-  //     },
-  //   ],
-
-  highlights: [
-    {
-      index: 1,
-      highlight: 'Design system owner responsible for defining and maintaining design standards.',
-    },
-    {
-      index: 2,
-      highlight:
-        'Led team of 13 designers, researchers, and content designers, to ensure craft, consistency, and solid user experiences across Mobile and Web. Created roadmaps, processes, and structure for the Design team.',
-    },
-    {
-      index: 3,
-      highlight: `Lead on the brand update project,working on market research, coordinating brand strategy, and
-      executing on design solutions to refresh and elevate brand identity.`,
-    },
-  ],
-};
-
-const headerBlockSample: Block = {
-  type: 'header',
-  id: `header-${String(new Date().getTime() / 1000)}`,
-  content: {
-    name: {
-      formType: 'string',
-      formValue: 'Jon Dang',
-    },
-
-    phone: {
-      formType: 'string',
-      formValue: '571.225.5960',
-    },
-    email: {
-      formType: 'string',
-      formValue: 'jondang@gmail.com',
-    },
-
-    location: {
-      formType: 'string',
-      formValue: 'San Francisco, CA',
-    },
+    highlights: [
+      {
+        index: 1,
+        highlight: 'Design system owner responsible for defining and maintaining design standards.',
+      },
+      {
+        index: 2,
+        highlight:
+          'Led team of 13 designers, researchers, and content designers, to ensure craft, consistency, and solid user experiences across Mobile and Web. Created roadmaps, processes, and structure for the Design team.',
+      },
+      {
+        index: 3,
+        highlight: `Lead on the brand update project,working on market research, coordinating brand strategy, and
+          executing on design solutions to refresh and elevate brand identity.`,
+      },
+    ],
   },
 };
 
+type ExperienceBlock = Record<string, ExperienceBlockType>;
+
 type ResumeBuilderContextProps = {
-  blocks: Block[];
-  headerBlock?: Block;
-  selectedBlock?: Block | null;
-  selectBlock: (blockId: string) => void;
-  removeSelectedBlock: () => void;
-  editHeaderField: (headerBlock: any) => void;
-  updateWorkBlock: (block: any) => void;
-  selectBlockCopy: (block: Block) => void;
+  // blocks: Block[];
+  // headerBlock?: Block;
+  // selectedBlock?: Block | null;
+  // selectBlock: (blockId: string) => void;
+  // removeSelectedBlock: () => void;
+  // editHeaderField: (headerBlock: any) => void;
+  // updateWorkBlock: (block: any) => void;
+  // selectBlockCopy: (block: Block) => void;
 };
 
 const ResumeBuilderContext = createContext<ResumeBuilderContextProps>({
@@ -89,65 +53,42 @@ const ResumeBuilderContext = createContext<ResumeBuilderContextProps>({
 });
 
 export const ResumeBuilderProvider = ({ children }: { children: React.ReactNode }) => {
-  const [blocks, setBlocks] = useState<Block[] | []>([workExperience]);
+  const [experienceBlocks, setExperienceBlock] = useState<ExperienceBlock>(workExperience);
+  const [selectedExperienceBlock, setSelectedExperienceBlock] = useState<ExperienceBlockType | null>(null);
 
-  const [selectedBlock, setSelectBlock] = useState<Block | null>(null);
-
-  const selectBlock = useCallback(
+  const selectExperienceBlock = useCallback(
     (blockId: string) => {
-      const block = blocks.filter((block: Block) => block.id === blockId)?.[0];
-      setSelectBlock(block);
+      const block = experienceBlocks[blockId];
+      if (block) {
+        setSelectedExperienceBlock(block);
+      }
     },
-    [blocks],
+    [experienceBlocks],
   );
 
-  const headerBlock = useMemo(() => {
-    if (selectedBlock && selectedBlock.type === 'header') return selectedBlock;
-  }, [selectedBlock]);
-
-  const editHeaderField = useCallback(
-    (props) => {
-      const updatedBlock = {
-        ...headerBlock,
-        content: props,
-      };
-
-      const updateBlocks = [...blocks.filter((block) => block.id !== updatedBlock.id), updatedBlock];
-
-      setBlocks(updateBlocks as Block[]);
-      setSelectBlock(null);
+  const updateExperienceBlock = useCallback(
+    (block: ExperienceBlockType) => {
+      const updatedBlocks = { ...experienceBlocks };
+      updatedBlocks[block.id] = block;
+      setExperienceBlock(updatedBlocks);
+      setSelectedExperienceBlock(null);
     },
-    [blocks, headerBlock],
-  );
-
-  const updateWorkBlock = useCallback(
-    (props) => {
-      const updatedBlocks = [...blocks.filter((block) => block.id !== props.id), props];
-
-      setBlocks(updatedBlocks as Block[]);
-      setSelectBlock(null);
-    },
-    [blocks],
+    [experienceBlocks],
   );
 
   const values = useMemo(() => {
     return {
-      blocks,
-      selectedBlock,
-      selectBlock,
-      headerBlock,
-      removeSelectedBlock: () => setSelectBlock(null),
-      editHeaderField,
-      updateWorkBlock,
-      selectBlockCopy: (props: Block) => {
-        setSelectBlock(props);
-      },
+      experienceBlocks: Object.values(experienceBlocks),
+      selectedExperienceBlock,
+      selectExperienceBlock,
+      updateExperienceBlock,
     };
-  }, [blocks, updateWorkBlock, selectBlock, selectedBlock, headerBlock, editHeaderField]);
+  }, [experienceBlocks, updateExperienceBlock, selectExperienceBlock, selectedExperienceBlock]);
 
   return <ResumeBuilderContext.Provider value={values}>{children}</ResumeBuilderContext.Provider>;
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useResumeBuilder = () => {
   return useContext(ResumeBuilderContext);
 };
