@@ -10,9 +10,9 @@ const Resume = () => {
     <>
       <div className="resume">
         <ExperienceBlockEditor />
-        {/* {experienceBlocks.map((experience) => {
+        {experienceBlocks.map((experience) => {
           return <ExperienceBlock experience={experience} key={experience.id} />;
-        })} */}
+        })}
       </div>
     </>
   );

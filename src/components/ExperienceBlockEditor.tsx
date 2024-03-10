@@ -8,9 +8,9 @@ export const ExperienceBlockEditor = () => {
       </Drawer.Trigger>
       <Drawer.Portal>
         <Drawer.Overlay className="fixed inset-0 bg-black/40" />
-        <Drawer.Content className="bg-white flex flex-col rounded-t-[10px] h-full w-[400px] mt-24 fixed bottom-0 right-0">
+        <Drawer.Content className="bg-white flex flex-col rounded h-full w-[400px] mt-24 fixed bottom-0 right-0">
           <div className="p-4 bg-white flex-1 h-full">
-            <div className="max-w-md mx-auto">
+            {/* <div className="max-w-md mx-auto">
               <p className="text-zinc-600 mb-8">
                 It uses{' '}
                 <a
@@ -29,7 +29,7 @@ export const ExperienceBlockEditor = () => {
                   this tweet.
                 </a>
               </p>
-            </div>
+            </div> */}
           </div>
         </Drawer.Content>
       </Drawer.Portal>
